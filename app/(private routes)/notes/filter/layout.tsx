@@ -1,5 +1,5 @@
 // C:\Users\Admin\Desktop\project_new\homework\07-routing-nextjs\app\notes\filter\layout.tsx
-import css from "../../../styles/LayoutNotes.module.css";
+import css from "../../../../styles/LayoutNotes.module.css";
 
 type Props = {
   children: React.ReactNode;
