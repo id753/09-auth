@@ -12,13 +12,21 @@
 
 import { api } from "./api";
 import type { Note } from "../../types/note";
-import {
-  CheckSessionResponse,
-  LoginPayload,
-  RegisterPayload,
-  User,
-} from "@/types/auth";
+import { User } from "@/types/user";
 
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface RegisterPayload {
+  email: string;
+  password: string;
+}
+
+export interface CheckSessionResponse {
+  success: boolean;
+}
 // --- Інтерфейси ---
 
 export interface NoteHttpResponse {
@@ -86,19 +94,27 @@ export const logout = async (): Promise<void> => {
   await api.post("/auth/logout");
 };
 
-export const checkSession = async (): Promise<boolean> => {
-  const { data } = await api.get<CheckSessionResponse>("/auth/check");
-  return data.success;
-};
-
 export const getMe = async (): Promise<User> => {
-  const { data } = await api.get<User>("/auth/me");
+  const { data } = await api.get<User>("/auth/session");
   return data;
 };
 
-// Partial<User>, Partial<T>?
-// Это встроенный служебный тип (Utility Type), который делает все свойства объекта T необязательными.
+export const checkSession = async (): Promise<boolean> => {
+  try {
+    const { data } = await api.get(`/auth/session?t=${Date.now()}`);
+
+    // Перевіряємо, чи немає у відповіді success: false
+    // Або чи є там дані користувача (наприклад, email)
+    if (data && data.success === false) {
+      return false;
+    }
+    return data;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const updateMe = async (payload: Partial<User>): Promise<User> => {
-  const { data } = await api.patch<User>("/auth/me", payload);
+  const { data } = await api.patch<User>("/users/me", payload);
   return data;
 };

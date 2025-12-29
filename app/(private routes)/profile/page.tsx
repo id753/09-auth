@@ -9,7 +9,7 @@ const page = () => {
       <div className={css.profileCard}>
         <div className={css.header}>
           <h1 className={css.formTitle}>Profile Page</h1>
-          <a src="" className={css.editProfileButton}>
+          {/* <a src="hghgh" className={css.editProfileButton}>
             Edit Profile
           </a>
         </div>
@@ -20,7 +20,7 @@ const page = () => {
             width={120}
             height={120}
             className={css.avatar}
-          />
+          /> */}
         </div>
         <div className={css.profileInfo}>
           <p>Username: your_username</p>
