@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "404 - Page Not Found | NoteHub",
     description:
       "The requested page was not found. Manage and organize your notes with ease on NoteHub.",
-    url: "https://notehub.com/404", // Замініть на ваш реальний домен
+    url: "https://notehub.com/404", // Замінvbv реальний домен
     images: [
       {
         url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",

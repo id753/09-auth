@@ -1,35 +1,33 @@
-//  для функцій, які викликаються у серверних компонентах (до params потрібно додавати cookeis у headers):
-
-//     fetchNotes
-//     fetchNoteById
-//     getMe
-//     checkSession.
 import { api } from "./api";
-// import { cookies } from "next/headers";
-import type { Note } from "../../types/note";
-import { CheckSessionResponse, NoteData, NoteHttpResponse } from "./clientApi";
-import { User } from "@/types/user";
 import { cookies } from "next/headers";
+import type { Note } from "../../types/note";
+import { NoteData, NoteHttpResponse } from "./clientApi";
+import { User } from "@/types/user";
 
-// Функція-помічник для отримання заголовка з куками
-const getAuthHeaders = () => {
-  const cookieStore = cookies();
+const getAuthHeaders = async () => {
+  const cookieStore = await cookies();
+
+  const cookieString = cookieStore
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; ");
+
   return {
     headers: {
-      Cookie: cookieStore.toString(),
+      Cookie: cookieString,
     },
   };
 };
-
-// --- Функції для серверних компонентів ---
 
 export const fetchNotes = async (
   page: number,
   search: string,
   tag?: string
 ): Promise<NoteData> => {
+  const authHeaders = await getAuthHeaders();
+
   const response = await api.get<NoteHttpResponse>("/notes", {
-    ...getAuthHeaders(), // Додаємо куки в хедери
+    ...authHeaders,
     params: {
       page,
       search,
@@ -45,18 +43,21 @@ export const fetchNotes = async (
 };
 
 export const fetchNoteById = async (id: Note["id"]): Promise<Note> => {
-  const response = await api.get<Note>(`/notes/${id}`, getAuthHeaders());
+  const authHeaders = await getAuthHeaders();
+  const response = await api.get<Note>(`/notes/${id}`, authHeaders);
   return response.data;
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await api.get<User>("/auth/session", getAuthHeaders());
+  const authHeaders = await getAuthHeaders();
+  const { data } = await api.get<User>("/users/me", authHeaders);
   return data;
 };
 
 export const checkSession = async (): Promise<boolean> => {
   try {
-    await api.get("/auth/session", getAuthHeaders());
+    const authHeaders = await getAuthHeaders();
+    await api.get("/auth/session", authHeaders);
     return true;
   } catch (error) {
     return false;

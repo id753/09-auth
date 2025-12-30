@@ -95,7 +95,7 @@ export const logout = async (): Promise<void> => {
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await api.get<User>("/auth/session");
+  const { data } = await api.get<User>("/users/me");
   return data;
 };
 

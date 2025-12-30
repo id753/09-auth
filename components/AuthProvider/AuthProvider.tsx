@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { checkSession, getMe } from "@/lib/api/clientApi"; // ТІЛЬКИ КЛІЄНТСЬКІ ІМПОРТИ
+import { checkSession, getMe } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 
 export default function AuthProvider({
@@ -11,7 +11,7 @@ export default function AuthProvider({
   children: React.ReactNode;
 }) {
   const [isLoading, setIsLoading] = useState(true);
-  const { setUser, clearIsAuthenticated, isAuthenticated } = useAuthStore();
+  const { setUser, clearIsAuthenticated } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -42,7 +42,7 @@ export default function AuthProvider({
   }, [setUser, clearIsAuthenticated, pathname, router]);
 
   if (isLoading) {
-    return <div className="loader">Loading...</div>; // Можна замінити на гарний Spinner
+    return <div className="loader">Loading...</div>;
   }
 
   return <>{children}</>;

@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote, type CreateNoteData } from "../../lib/api/clientApi";
 // import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import { useNoteDraftStore } from "../../lib/store/noteStore";
+import { useNoteDraftStore } from "../../../09-auth/app/api/store/noteStore";
 
 interface NoteFormProps {
   onClose: () => void;

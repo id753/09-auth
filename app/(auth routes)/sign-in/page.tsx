@@ -21,10 +21,8 @@ const LogIn = () => {
         formData
       ) as unknown as LoginPayload;
 
-      // 2. Вызов из clientApi
       const result = await login(formValues);
 
-      // 3. Если ответ успешный то редиректим
       if (result) {
         setUser(result); // Стан змінюється глобально
         router.push("/profile");
