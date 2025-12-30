@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+// Якщо сторінка редагування профілю позначена як Static (кружечок), це означає, що Next.js намагається скомпілювати її в чистий HTML під час білду. Оскільки це приватний маршрут, який залежить від стану користувача, він не повинен бути статичним.
 
 import { useState } from "react";
 import Image from "next/image";
