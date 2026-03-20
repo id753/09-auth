@@ -12,7 +12,7 @@ const privateRoutes = ["/profile"];
 
 const baseURL = "https://notehub-api.goit.study";
 
-// 1 middleware
+// 1  middleware
 export async function proxy(request: NextRequest) {
   // 4
   const cookieStore = await cookies();
