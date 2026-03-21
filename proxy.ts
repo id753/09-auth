@@ -1,78 +1,89 @@
-import axios from "axios";
-import { parse } from "cookie";
-
-// 0
 import { NextRequest, NextResponse } from "next/server";
+import { parse } from "cookie";
+import { checkServerSession } from "./lib/api/serverApi";
 
-// 3
-import { cookies } from "next/headers";
+const privateRoutes = ["/profile", "/notes"];
+const publicRoutes = ["/sign-in", "/sign-up"];
 
-// 2
-const privateRoutes = ["/profile"];
-
-const baseURL = "https://notehub-api.goit.study";
-
-// 1  middleware
 export async function proxy(request: NextRequest) {
-  // 4
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
-  const refreshToken = cookieStore.get("refreshToken")?.value;
   const { pathname } = request.nextUrl;
 
+  // 1. Пытаемся получить accessToken из кук запроса (то, что прислал браузер)
+  const accessToken = request.cookies.get("accessToken")?.value;
+  const refreshToken = request.cookies.get("refreshToken")?.value;
+
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
   const isPrivateRoute = privateRoutes.some((route) =>
     pathname.startsWith(route)
   );
-  // 5 далее пренести в хедере
-  if (isPrivateRoute) {
-    if (!accessToken) {
-      if (!refreshToken) {
-        return NextResponse.redirect(new URL("/sign-in", request.url));
-      } else {
-        const response = await axios.get(`${baseURL}/auth/session`, {
-          headers: {
-            Cookie: cookieStore.toString(),
-          },
-        });
 
-        // 6 копия куки с апи-аус-логин-роут
-        const setCookie = response.headers["set-cookie"];
+  // 2. Если accessToken нет, но есть refreshToken — идем на бэкенд за новой сессией
+  if (!accessToken && refreshToken) {
+    try {
+      const apiRes = await checkServerSession();
+      const setCookieHeader = apiRes.headers["set-cookie"];
 
-        if (setCookie) {
-          const cookieArray = Array.isArray(setCookie)
-            ? setCookie
-            : [setCookie];
-          for (const cookieStr of cookieArray) {
-            const parsed = parse(cookieStr);
-            const options = {
-              expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
-              path: parsed.Path,
-              maxAge: Number(parsed["Max-Age"]),
-            };
-            if (parsed.accessToken)
-              cookieStore.set("accessToken", parsed.accessToken, options);
-            if (parsed.refreshToken)
-              cookieStore.set("refreshToken", parsed.refreshToken, options);
+      if (setCookieHeader) {
+        // Создаем базовый ответ (либо редирект на главную, либо разрешаем переход дальше)
+        const response = isPublicRoute
+          ? NextResponse.redirect(new URL("/", request.url))
+          : NextResponse.next();
+
+        // Парсим массив строк из заголовка Set-Cookie
+        const cookieStrings = Array.isArray(setCookieHeader)
+          ? setCookieHeader
+          : [setCookieHeader];
+
+        cookieStrings.forEach((str) => {
+          const parsed = parse(str);
+          // Извлекаем имя куки (первая часть до знака '=')
+          const name = str.split("=")[0].trim();
+          const value = parsed[name];
+
+          // Проверяем, что это наши токены и значение не пустое (для TS)
+          if (
+            (name === "accessToken" ||
+              name === "refreshToken" ||
+              name === "sessionId") &&
+            value
+          ) {
+            response.cookies.set(name, value, {
+              httpOnly: true,
+              path: parsed.Path || "/",
+              // ВАЖНО: на http://localhost принудительно ставим secure: false, иначе браузер их не сохранит
+              secure: false,
+              sameSite: "lax",
+              maxAge: parsed["Max-Age"] ? Number(parsed["Max-Age"]) : 86400,
+            });
           }
-
-          return NextResponse.json(response.data, { status: response.status });
-        }
-
-        return NextResponse.next({
-          headers: {
-            Cookie: cookieStore.toString(),
-          },
         });
+
+        return response;
       }
-    } else {
-      return NextResponse.next();
+    } catch (error) {
+      console.error("Auth Refresh Error in Middleware:", error);
+      // Если рефреш не удался — отправляем на логин, если это приватный роут
+      if (isPrivateRoute) {
+        return NextResponse.redirect(new URL("/sign-in", request.url));
+      }
     }
+  }
+
+  // 3. Логика защиты роутов (Access Control)
+  if (!accessToken && isPrivateRoute) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
+
+  if (accessToken && isPublicRoute) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();
 }
 
+// Конфигурация путей, для которых запускается Middleware
 export const config = {
-  // matchers: ["/profile"],
-  matcher: ["/profile", "/auth/session"],
+  matcher: ["/profile/:path*", "/notes/:path*", "/sign-in", "/sign-up"],
 };

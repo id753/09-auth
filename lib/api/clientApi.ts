@@ -65,7 +65,7 @@ export const fetchNotes = async (
   };
 };
 
-export const fetchNoteById = async (id: Note["id"]): Promise<Note> => {
+export const fetchNoteById = async (id: Note["_id"]): Promise<Note> => {
   const response = await api.get<Note>(`/notes/${id}`);
   return response.data;
 };
@@ -75,7 +75,7 @@ export const createNote = async (payload: CreateNoteData): Promise<Note> => {
   return response.data;
 };
 
-export const deleteNote = async (id: Note["id"]): Promise<void> => {
+export const deleteNote = async (id: Note["_id"]): Promise<void> => {
   await api.delete(`/notes/${id}`);
 };
 

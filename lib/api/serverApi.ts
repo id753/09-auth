@@ -42,7 +42,7 @@ export const fetchNotes = async (
   };
 };
 
-export const fetchNoteById = async (id: Note["id"]): Promise<Note> => {
+export const fetchNoteById = async (id: Note["_id"]): Promise<Note> => {
   const authHeaders = await getAuthHeaders();
   const response = await api.get<Note>(`/notes/${id}`, authHeaders);
   return response.data;
@@ -63,3 +63,13 @@ export const checkSession = async (): Promise<boolean> => {
     return false;
   }
 };
+
+export async function checkServerSession() {
+  const cookieStore = await cookies();
+  const response = await api.get("/auth/session", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+  return response;
+}
