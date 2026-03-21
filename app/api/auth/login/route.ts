@@ -1,6 +1,7 @@
 // app/api/auth/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { api } from "../../api";
+import { handleApiError } from "../../_utils/utils";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,10 +25,7 @@ export async function POST(req: NextRequest) {
     }
 
     return response;
-  } catch (error: any) {
-    return NextResponse.json(
-      { error: error.response?.data?.message || "Login failed" },
-      { status: error.response?.status || 500 }
-    );
+  } catch (error) {
+    return handleApiError(error, "Login failed");
   }
 }

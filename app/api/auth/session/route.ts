@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { api } from "../../api";
 import { parse } from "cookie";
 import { isAxiosError } from "axios";
-import { logErrorResponse } from "../../_utils/utils";
+import { handleApiError, logErrorResponse } from "../../_utils/utils";
 
 export async function GET() {
   try {
@@ -45,11 +45,6 @@ export async function GET() {
     }
     return NextResponse.json({ success: false }, { status: 200 });
   } catch (error) {
-    if (isAxiosError(error)) {
-      logErrorResponse(error.response?.data);
-      return NextResponse.json({ success: false }, { status: 200 });
-    }
-    logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ success: false }, { status: 200 });
+    return handleApiError(error, "Session failed");
   }
 }

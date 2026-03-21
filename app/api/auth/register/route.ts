@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { api } from "../../api";
+import { handleApiError } from "../../_utils/utils";
 
 export async function POST(req: Request) {
   try {
@@ -14,5 +15,7 @@ export async function POST(req: Request) {
     }
 
     return response;
-  } catch (error) {}
+  } catch (error) {
+    return handleApiError(error, "Register failed");
+  }
 }
