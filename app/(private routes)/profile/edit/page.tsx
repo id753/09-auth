@@ -74,13 +74,13 @@ const EditProfilePage = () => {
         {/* Используем photoUrl для превью по умолчанию */}
         <AvatarPicker profilePhotoUrl={photoUrl} onChangePhoto={setImageFile} />
         <div className={css.avatarWrapper}>
-          <Image
+          {/* <Image
             src={user.avatar || "/default-avatar.jpg"}
             alt="User Avatar"
             width={120}
             height={120}
             className={css.avatar}
-          />
+          /> */}
         </div>
         <form className={css.profileInfo} onSubmit={handleSave}>
           <div className={css.usernameWrapper}>
