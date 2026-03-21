@@ -7,6 +7,7 @@ import { useAuthStore } from "@/lib/store/authStore";
 import { getMe, updateAvatar, updateMe } from "@/lib/api/clientApi";
 import css from "./EditProfilePage.module.css";
 import AvatarPicker from "@/components/AvatarPicker/AvatarPicker";
+import Image from "next/image";
 
 const EditProfilePage = () => {
   const router = useRouter();
@@ -72,7 +73,15 @@ const EditProfilePage = () => {
 
         {/* Используем photoUrl для превью по умолчанию */}
         <AvatarPicker profilePhotoUrl={photoUrl} onChangePhoto={setImageFile} />
-
+        <div className={css.avatarWrapper}>
+          <Image
+            src={user.avatar || "/default-avatar.jpg"}
+            alt="User Avatar"
+            width={120}
+            height={120}
+            className={css.avatar}
+          />
+        </div>
         <form className={css.profileInfo} onSubmit={handleSave}>
           <div className={css.usernameWrapper}>
             <label htmlFor="username">Username:</label>
