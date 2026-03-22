@@ -1,6 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚NoteHub APP
+## A multi-page web app for note-taking with integrated authentication and SEO. 
 
-## Продовжено роботу над проєктом NoteHub, зосередившись на переходi на новий бекенд з авторизацією, який підтримує: захищені маршрути, токени, що зберігаються в куках, перевірку доступу до даних користувача. </br>
+### NoteHub (individual coursework project) is a sophisticated note-taking platform 🏷️ where I engineered the entire API interaction layer and authentication flow using Next.js App Router. </br> The project showcases a robust architectural approach, including secure 🍪 cookie-based session handling, middleware protection, and state management 🧹 with Zustand and TanStack Query. </br>While the UI was built using provided style guidelines, the core focus remained on building 🧱 a scalable and secure backend-integrated frontend.
+
+
+## [Live Project](https://09-auth-eosin-iota.vercel.app/) 
+⚠️ Note: The server is on a free plan, so it may take 30-50s to wake up 🚀 on the first load.
+## [Backend Code](https://github.com/id753/nodejs-hw)
+
+## Tech Stack
+### 🎨 Frontend Tech Stack: Next.js (App Router), React, TypeScript; Zustand (+ persist middleware), TanStack Query, Axios; Next.js Metadata API, SEO, Open Graph
+### ⚙️ [Backend](https://github.com/id753/todo-project-api) Tech Stack: Node.js, Express.js, MongoDB & Mongoose, Joi & Celebrate (validation), Cloudinary (image storage), Nodemailer (emails), bcrypt (password hashing), JWT (password reset tokens), Pino (logging), Multer (file uploads)
+Dev Tools & Environment: dotenv (environment variables), ES Modules (import/export), CORS configuration, async/await, Postman (API testing), Render (deployment)
+
+
+## Features
+### Frontend Experience
+- ✅ **Custom API Integration**: Engineered a modular API layer using Axios with withCredentials support, separating logic for Server and Client components.
+- ✅ **Secure Authentication**: Full login/register flow with cookie-based session handling and global state management via Zustand.
+- ✅ **Advanced Routing**: Implemented Next.js Middleware for route protection, ensuring seamless redirection between public and private pages.
+- ✅ **Dynamic Notes CRUD**: Complete Create, Read, Update, and Delete functionality with real-time UI updates using TanStack Query.
+- ✅ **Robust Form Handling**: Managed complex forms with validation, ensuring data integrity before server submission.
+- ✅ **UX Optimization**: Integrated loading/error states and sophisticated navigation logic for a smooth user experience.
+- ✅ **SEO & Social Sharing**: Full metadata configuration including Open Graph support for enhanced social media visibility.
+- ✅ **Architecture-First UI**: While the visual styles were provided as part of the technical assignment, I focused on building a clean, scalable architecture and efficient CSS Modules implementation.
+
+## Getting Started (Frontend)
+Clone the repository
+      
+    git clone git@github.com:id753/note_hub_app.git
+Install dependencies
+
+     npm install
+Environment Variables
+Create a .env file in the root directory (use .env.example as a template):
+
+    VITE_API_URL=http://localhost:3000
+Run the app
+
+    npm run dev
+Open http://localhost:3000 in your browser.
+
+## ⚠️ Note: The server is hosted on Render's free plan and may “sleep” when idle — the first load after waking up can take 30–50 seconds.
+
+<!--               
+## Фіналізовано роботу над проєктом NoteHub, зосередившись на переходi на свій  [бекенд](https://github.com/id753/nodejs-hw) з авторизацією, який підтримує: захищені маршрути, токени, що зберігаються в куках, перевірку доступу до даних користувача. </br>
 Попереднiй https://github.com/id753/08-zustand </br>
 ...................................................................................... </br>
 Використано новий бекенд з авторизацією, який підтримує:</br>
@@ -74,3 +118,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-->
