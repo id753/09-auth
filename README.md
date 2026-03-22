@@ -42,7 +42,7 @@ Run the app
 Open http://localhost:3000 in your browser.
 
 ## ⚠️ Note: The server is hosted on Render's free plan and may “sleep” when idle — the first load after waking up can take 30–50 seconds.
-
+Previous project: https://github.com/id753/08-zustand </br>
 <!--               
 ## Фіналізовано роботу над проєктом NoteHub, зосередившись на переходi на свій  [бекенд](https://github.com/id753/nodejs-hw) з авторизацією, який підтримує: захищені маршрути, токени, що зберігаються в куках, перевірку доступу до даних користувача. </br>
 Попереднiй https://github.com/id753/08-zustand </br>
