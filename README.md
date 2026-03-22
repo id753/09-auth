@@ -1,7 +1,7 @@
 # 📚NoteHub APP
 ## A multi-page web app for note-taking with integrated authentication and SEO. 
 
-### NoteHub (individual coursework project) is a sophisticated note-taking platform 🏷️ where I engineered the entire API interaction layer and authentication flow using Next.js App Router. </br> The project showcases a robust architectural approach, including secure cookie-based session handling, middleware protection, and state management with Zustand and TanStack Query. </br>While the UI was built using provided style guidelines, the core focus remained on building a scalable and secure backend-integrated frontend.
+### NoteHub (individual coursework project) is a sophisticated note-taking platform 🏷️ where I engineered the entire API interaction layer and authentication flow using Next.js App Router. </br> The project showcases a robust architectural approach, including secure 🍪 cookie-based session handling, middleware protection, and state management 🧹 with Zustand and TanStack Query. </br>While the UI was built using provided style guidelines, the core focus remained on building 🧱 a scalable and secure backend-integrated frontend.
 
 
 ## [Live Project](https://09-auth-eosin-iota.vercel.app/) 
