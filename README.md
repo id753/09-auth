@@ -15,7 +15,7 @@
 ## [Backend Code](https://github.com/id753/nodejs-hw)
 
 ## Tech Stack
-### 🎨 Frontend Tech Stack: Next.js (App Router), React, TypeScript; Zustand (+ persist middleware), TanStack Query, Axios; Next.js Metadata API, SEO, Open Graph
+### 🎨 Frontend Tech Stack: Next.js (App Router), React, TypeScript; Zustand (+ persist middleware), TanStack Query, Axios; CSS Modules; Next.js Metadata API, SEO, Open Graph; Versel
 ### ⚙️ [Backend](https://github.com/id753/todo-project-api) Tech Stack: Node.js, Express.js, MongoDB & Mongoose, Joi & Celebrate (validation), Cloudinary (image storage), Nodemailer (emails), bcrypt (password hashing), JWT (password reset tokens), Pino (logging), Multer (file uploads)
 Dev Tools & Environment: dotenv (environment variables), ES Modules (import/export), CORS configuration, async/await, Postman (API testing), Render (deployment)
 
